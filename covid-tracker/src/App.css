@@ -2,7 +2,16 @@
   margin: 0;
 }
 
+body{
+  background-color: #f5f6fa;
+}
+
 .app__header{
   display: flex;
   justify-content: space-around;
+}
+
+.app__box_holder{
+  display: flex;
+  justify-content: space-evenly;
 }

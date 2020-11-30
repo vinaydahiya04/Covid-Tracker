@@ -8,6 +8,8 @@ import {
   CardContent
 } from '@material-ui/core'
 
+import InfoBox from './components/InfoBox';
+
 function App() {
   const [countries,setCountries] = useState(['USA','UK','INDIA']);
   const [country,setCountry] = useState('worldwide');
@@ -51,6 +53,13 @@ function App() {
           ))}
         </Select>
       </FormControl>
+      </div>
+
+      <div className='app__box_holder'>
+        <InfoBox title="active" total="100 " cases="5616"/>
+        <InfoBox title="dead" total="10021" cases="8656" />
+        <InfoBox title="recovered" total="613165" cases="8385" />
+
       </div>
 
       
