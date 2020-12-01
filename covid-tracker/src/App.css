@@ -2,6 +2,12 @@
   margin: 0;
 }
 
+.app{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+
 body{
   background-color: #f5f6fa;
 }
@@ -14,4 +20,23 @@ body{
 .app__box_holder{
   display: flex;
   justify-content: space-evenly;
+}
+
+
+.app__left{
+  flex:3;
+
+}
+
+.app__right{
+  flex:1;
+  
+}
+
+@media (max-width:720px){
+  .app{
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 20px;
+  }
 }

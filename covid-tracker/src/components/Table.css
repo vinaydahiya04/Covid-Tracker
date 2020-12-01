@@ -1,0 +1,11 @@
+.table__list{
+    height: 300px;
+    overflow: scroll;  
+    background-color: white;
+    color:black;
+
+}
+
+.table__list tr:nth-of-type(odd){
+    background-color: #e2e2e4;
+}
