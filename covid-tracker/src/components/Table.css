@@ -6,6 +6,20 @@
 
 }
 
+table{
+    width: 100%;
+}
+
 .table__list tr:nth-of-type(odd){
     background-color: #e2e2e4;
+}
+
+table tr{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+.table__list td{
+    padding: 0.5rem;
 }
