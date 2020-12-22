@@ -67,7 +67,7 @@ const buildChartData = (data, casesType) => {
 
 
 
-function LineGraph({casesType='cases'}) {
+function LineGraph({casesType='cases',dark}) {
 
     const [data,setData] = useState({});
 
@@ -92,7 +92,7 @@ function LineGraph({casesType='cases'}) {
     
 
     return (
-        <div>
+        <div style={dark?{backgroundColor:"black",color:"white",height:"100%"}:{}}>
             {data?.length>0 && (
                 <Line
                     data={{

@@ -6,7 +6,7 @@ function Table(props) {
     props.data.sort((a,b) => b.number - a.number);
     console.log(props.data);
     return (
-        <div className='table__list'>
+        <div className={props.dark?'table__list_dark':'table__list'}>
             <table>
                 {props.data.map((country)=>(
                     <tr>

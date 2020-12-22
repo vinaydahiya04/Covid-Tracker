@@ -3,10 +3,7 @@ import numeral from 'numeral'
 import {Circle,Popup} from 'react-leaflet';
 
 const casesTypeColors = {
-    cases: {
-        hex: "red",        
-        multiplier: 600,
-    },
+    
     recovered: {
         hex: "black",
         multiplier: 1000,
@@ -15,11 +12,19 @@ const casesTypeColors = {
         hex: "#ffffff",        
         multiplier: 1500,
     },
+    cases: {
+        hex: "red",
+        multiplier: 600,
+    },
 };
 
 
-const showDataOnMap = (data,casesType='cases') =>(
-    data.map(country => (
+const showDataOnMap = (data, casesType = 'cases') => {
+    
+    return(
+    data.map(country => {
+        return(
+        
         <Circle
             center = {[country.countryInfo.lat,country.countryInfo.long]}
             fillOpacity={0.4}
@@ -37,6 +42,7 @@ const showDataOnMap = (data,casesType='cases') =>(
                     <div>Cases: {numeral(country.cases).format('0,0')}</div>
                     <div>Recovered: {numeral(country.recovered).format('0,0')}</div>
                     <div>Deaths: {numeral(country.deaths).format('0,0')}</div>
+                    <div >{casesType}</div>
 
 
 
@@ -47,8 +53,8 @@ const showDataOnMap = (data,casesType='cases') =>(
 
         </Circle>
 
-    ))
+    );})
 
-);
+);}
 
 export {showDataOnMap};

@@ -23,7 +23,8 @@ function App() {
   const [mapCenter,setMapCenter] = useState({lat:34.80746, lng:-40.4796});
   const [mapZoom,setMapZoom] = useState(2);
   const [mapCountries,setMapCountries] = useState([]);
-  const [casesType,setCasesType] = useState('cases');
+  const [casesType,setCasesType] = useState("cases");
+  const [dark,setDark] = useState(false);
 
   useEffect(()=>{
     const getCovidData = async ()=>{
@@ -81,14 +82,18 @@ function App() {
       : `https://disease.sh/v3/covid-19/countries/${e.target.value}`;
 
       console.log(url);
+      
 
     await fetch(url).then((response) => response.json())
     .then((data) => {
       setCountryInfo(data);
       setMapZoom(4);
-      setMapCenter({lat: data.countryInfo.lat, lng:data.countryInfo.long});
-
-      console.log([data.countryInfo.lat, data.countryInfo.long]);
+      if(e.target.value==='worldwide'){
+        setMapCenter({ lat: 34.80746, lng: -40.4796 });
+      }
+      else{
+        setMapCenter({ lat: data.countryInfo.lat, lng: data.countryInfo.long });
+      }
       
 
       
@@ -102,13 +107,22 @@ function App() {
 
 
   return (
-    <div className="app">
-      <div className="app__left">
-        <div className='app__header'>
-          <h1>COVID-19 TRACKER</h1>
+    <div className={dark?"app_dark":"app"}>
+      <div className={dark?"app__left_dark":"app__left"}>
+        <div className={dark?'app__header_dark':'app__header'}>
+          <h1>COVID-19 TRACKER </h1>
+          <label className="dark__label">
+            <div className="dark__toggle">
+              <input className="dark__toggle-state" type="checkbox" name="check" value="check" onChange={()=>{setDark(!dark)}} />
+              <div className="dark__indicator"></div>
+            </div>
+            <div className={dark?"dark__label-text_dark":'dark__label-text'}>Dark Mode </div>
+            
+          </label>
+
           <FormControl className='app__dropdown'>
-            <Select variant='outlined' value={country} onChange={CountryChangeHandler}>
-              <MenuItem value="worldwide">Worldwide</MenuItem>
+            <Select variant='outlined' value={country} style={dark ? { color: "white",border:"1px solid white" } : {}} onChange={CountryChangeHandler}>
+              <MenuItem value="worldwide" >Worldwide</MenuItem>
               {countries.map(country => (
                 <MenuItem value={country.value}>{country.name}</MenuItem>
               ))}
@@ -117,13 +131,13 @@ function App() {
         </div>
 
         <div className='app__box_holder'>
-          <InfoBox active={casesType==='cases'} onClick={e => setCasesType('cases')} title="active" cases={CountryInfo.todayCases} total={CountryInfo.cases} />
-          <InfoBox active={casesType === 'recovered'} onClick={e => setCasesType('recovered')} title="recovered" cases={CountryInfo.todayRecovered} total={CountryInfo.recovered} />
-          <InfoBox active={casesType === 'deaths'} onClick={e => setCasesType('deaths')} title="dead" cases={CountryInfo.todayDeaths} total={CountryInfo.deaths} />
+          <InfoBox active={casesType==='cases'} dark={dark} onClick={e => setCasesType('cases')} title="active" cases={CountryInfo.todayCases} total={CountryInfo.cases} />
+          <InfoBox active={casesType === 'recovered'} dark={dark}  onClick={e => setCasesType('recovered')} title="recovered" cases={CountryInfo.todayRecovered} total={CountryInfo.recovered} />
+          <InfoBox active={casesType === 'deaths'} dark={dark} onClick={e => setCasesType('deaths')} title="dead" cases={CountryInfo.todayDeaths} total={CountryInfo.deaths} />
 
-        </div>
-        <h1>{mapCenter.lat}</h1>         
+        </div>     
         <Map
+        dark={dark}
         casesType={casesType}
         countries = {mapCountries}
         center={mapCenter}
@@ -132,14 +146,15 @@ function App() {
 
       </div>
 
-      <Card className="app__right">
-        <CardContent>
-          <h1>Live cases by country</h1>
-          <Table data={tableData} />
-          <h1>World wide new {casesType}</h1>
+      <Card className={dark?"app__right_dark":"app__right"}>
+        <CardContent style={dark?{backgroundColor:"black",color:"white"}:{}}>
+          <h2>Total cases by country</h2>
+          <br></br>
+          <Table dark={dark} data={tableData} />
+          <h2>World wide new {casesType}</h2>
         </CardContent>
 
-        <LineGraph  casesType={casesType}/>
+        <LineGraph dark={dark}  casesType={casesType}/>
 
       </Card>
       
